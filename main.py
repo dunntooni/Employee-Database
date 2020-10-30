@@ -35,15 +35,58 @@ def addPosition():
     cursor.execute("INSERT INTO positions (name, pay) VALUES (?,?)", values)
     connection.commit()
 
-add = input("Add Employee?(y/n)")
-if add == "y":
-    addEmployee()
-displayEmployees()
+def editEmployeeName():
+    print("")
+    displayEmployees()
+    employeeID = input("Please input the ID of the employee whose name needs to be changed: ")
+    employeeName = input("Please input the new name of the employee: ")
+    values = (employeeName, employeeID)
+    cursor.execute("UPDATE employees SET name = ? WHERE id = ?", values)
+    connection.commit()
 
-add = input("Add Position?(y/n)")
-if add == "y":
-    addPosition()
-displayPositions()
+    
+def editEmployeeExperience():
+    print("")
+    displayEmployees()
+    employeeID = input("Please input the ID of the employee whose name needs to be changed: ")
+    employeeExperience = input("Please input the adjusted experience for the employee: ")
+    values = (employeeExperience, employeeID)
+    cursor.execute("UPDATE employees SET experience = ? WHERE id = ?", values)
+    connection.commit()
 
+def editEmployee():
+    print("1) Edit Employee Name")
+    print("2) Edit Employee Experience")
+    print("3) Cancel Edit")
+    editType = input("> ")
+    if editType == "1":
+        editEmployeeName()
+    elif editType == "2":
+        editEmployeeExperience()
+    else:
+        print("")
+        return
+
+userSelect = "1"
+while userSelect != "7":
+    print("What would you like to do?")
+    print("1) Add a New Employee")
+    print("2) Add a New Position")
+    print("3) Edit an Existing Employee")
+    print("7) Quit")
+    print("")
+    userSelect = input("> ")
+    print("")
+    if userSelect == "1":
+        addEmployee()
+        displayEmployees()
+        print("")
+    elif userSelect == "2":
+        addPosition()
+        displayPositions()
+        print("")
+    elif userSelect == "3":
+        editEmployee()
+        print("")
 
 connection.close()
