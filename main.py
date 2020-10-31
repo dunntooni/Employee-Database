@@ -27,6 +27,9 @@ def addEmployee():
     values = (employeeName, employeeExperience)
     cursor.execute("INSERT INTO employees (name, experience) VALUES (?,?)", values)
     connection.commit()
+    print("")
+    print("Updated list of employees:")
+    displayEmployees()
 
 def addPosition():
     positionName = input("Please enter the name of the position: ")
@@ -34,6 +37,9 @@ def addPosition():
     values = (positionName, positionPay)
     cursor.execute("INSERT INTO positions (name, pay) VALUES (?,?)", values)
     connection.commit()
+    print("")
+    print("Updated list of positions:")
+    displayPositions()
 
 def editEmployeeName():
     print("")
@@ -100,26 +106,42 @@ def editPosition():
         print("")
         return
 
+def deleteEmployee():
+    print("")
+    displayEmployees()
+    employeeID = input("Please input the ID of the departing employee: ")
+    values = (employeeID,)
+    cursor.execute("DELETE FROM employees WHERE id = ?", values)
+    connection.commit()
+
+def deletePosition():
+    print("")
+    displayPositions()
+    positionID = input("Please input the ID of the position to be removed: ")
+    values = (positionID,)
+    cursor.execute("DELETE FROM positions WHERE id = ?", values)
+    connection.commit()
+
 userSelect = "1"
-while userSelect != "7":
+while userSelect != "9":
     print("What would you like to do?")
     print("1) Add a New Employee")
     print("2) Add a New Position")
     print("3) Edit an Existing Employee")
     print("4) Edit an Existing Position")
-    print("5) Display Employee List")
-    print("6) Display Position List")
-    print("7) Quit")
+    print("5) Display All Employees")
+    print("6) Display All Positions")
+    print("7) Remove an Employee")
+    print("8) Remove a Position")
+    print("9) Quit")
     print("")
     userSelect = input("> ")
     print("")
     if userSelect == "1":
         addEmployee()
-        displayEmployees()
         print("")
     elif userSelect == "2":
         addPosition()
-        displayPositions()
         print("")
     elif userSelect == "3":
         editEmployee()
@@ -132,6 +154,12 @@ while userSelect != "7":
         print("")
     elif userSelect == "6":
         displayPositions()
+        print("")
+    elif userSelect == "7":
+        deleteEmployee()
+        print("")
+    elif userSelect == "8":
+        deletePosition()
         print("")
 
 connection.close()
